@@ -9,7 +9,7 @@ var app = express();
 //using middleware
 app.use(bodyParser.json());
 
-//create a route
+//create POST req a route
 app.post('/todos', (req, res) => {
   console.log(req.body);
   var todo = new Todo({
@@ -21,6 +21,15 @@ app.post('/todos', (req, res) => {
     res.status(400).send(e);
   });
 }); //GET /todos/w2j3hy47de0fuek
+
+//create GET rea get all todos
+app.get('/todos', (req, res) => {
+  Todo.find().then( (todos) => {
+    res.send({todos});
+  }, (e) => {
+    res.status(400).send(e);
+  })
+});
 
 app.listen(3000, () => {
   console.log('Started on port 3000');
