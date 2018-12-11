@@ -39,5 +39,5 @@ User.findById('5c0e6ea183528e9180f8d2e2').then( (user) => {
   }
   console.log(JSON.stringify(user, undefined, 2));
 }, (e) => {
-  console.luserog(e);
+  console.log(e);
 });
