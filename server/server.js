@@ -26,7 +26,7 @@ app.post('/todos', (req, res) => {
   });
 }); //GET /todos/w2j3hy47de0fuek
 
-//create GET rea get all todos
+//create GET get all todos
 app.get('/todos', (req, res) => {
   Todo.find().then( (todos) => {
     res.send({todos});
@@ -34,7 +34,7 @@ app.get('/todos', (req, res) => {
     res.status(400).send(e);
   });
 });
-
+//Get Todo by Id
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)){//Id isn't valid
@@ -46,6 +46,22 @@ app.get('/todos/:id', (req, res) => {
     }
     res.send({todo});//identical {todo: todo}
   }).catch((e) => {
+    res.status(400).send();
+  });
+});
+//Remove Todo by Id
+app.delete('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  if (!ObjectID.isValid(id)){
+    return res.status(400).send();
+  }
+
+  Todo.findByIdAndRemove(id).then( (todo) => {
+    if (!todo){
+      return res.status(404).send();
+    }
+    res.send(todo);
+  }).catch( (e) => {
     res.status(400).send();
   });
 });
